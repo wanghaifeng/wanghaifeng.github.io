@@ -1,11 +1,37 @@
-OutOfMemory分析方案与实施步骤
+# OutOfMemory分析方案与实施步骤
 ===
-OutOfMemory异常（简称OOM）发生的原因通常都是因为JVM的垃圾回收机制失效，内存耗尽的同时，有新的数据继续写入共享内存堆栈。查找及分析的策略主要为：1、通过检查垃圾回收日志，对内存分配及回收过程进行调优；2、对系统加压并跟踪内存状态，找出无法回收的大数据对象；3、通过步骤2的结果，调整JVM内存配置，或者优化代码逻辑。
+OutOfMemory异常（简称OOM）发生的原因通常都是因为JVM的垃圾回收机制失效，内存耗尽的同时，有新的数据继续写入共享内存堆栈。
 
-## 利用垃圾回收日志进行GC优化
+查找及分析的策略主要为：
++ 通过检查垃圾回收日志，对内存分配及回收过程进行调优；
++ 对系统加压并跟踪内存状态，找出无法回收的大数据对象；
++ 通过步骤2的结果，调整JVM内存配置，或者优化代码逻辑。
+
+## 具体方案及策略
+
+### 利用垃圾回收日志进行GC优化
 * 应用服务器启用GC日志，及相关参数
+<pre><code>
+-Xloggc:/tmp/logs/gc-%t.log
+-XX:+PrintGCDetails
+-XX:+PrintGCTimeStamps
+-XX:+PrintGCCause
+-XX:+PrintTenuringDistribution
+-XX:+UseGCLogFileRotation
+-XX:NumberOfGCLogFiles=10
+-XX:GCLogFileSize=5M
+</code></pre>
+* 初始优化建议
++ 根据数据对象大小，放宽年轻代（Young Generation）的对象大小限制
+<pre><code>-XX:PretenureSizeThreshold</code></pre>
++ 增加年轻代存活区数据进入老年代（Old Generation）之前的交替次数
+<pre><code>-XX:MaxTenuringThreshold</code></pre>
++ 选择性调整触发老年代Full GC的内存使用率
+<pre><code>-XX:CMSInitiatingOccupancyFraction=50</code></pre>
+* 根据GC日志给出的后续优化建议
 
 
-## 对系统加压找出内存溢出原因
+### 对系统加压找出内存溢出原因
 
-## 优化JVM内存配置或者代码优化建议
+
+### 优化JVM内存配置或者代码优化建议

@@ -1,3 +1,3 @@
-# wanghaifeng.github.io
+# wanghaifeng@github
 --
 ## This is my website.

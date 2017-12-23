@@ -41,3 +41,4 @@ https://www.yourkit.com/docs/java/help/profiling_j2ee_remote.jsp
 * 可选的代码性能优化步骤：1、单用户单线程运行，记录每个URL的响应时间；2、10用户加压，记录并对比每个URL的相应时间，选择可能有问题的URL；3、50用户加压，记录对比主要URL相应时间；4、加压后运行效率明显变差的URL列表
 
 ### 优化JVM内存配置或者代码优化建议
+TODO

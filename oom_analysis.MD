@@ -1,5 +1,6 @@
 # OutOfMemory分析方案与实施步骤
 ===
+
 OutOfMemory异常（简称OOM）发生的原因通常都是因为JVM的垃圾回收机制失效，内存耗尽的同时，有新的数据继续写入共享内存堆栈。
 
 查找及分析的策略主要为：
@@ -22,11 +23,11 @@ OutOfMemory异常（简称OOM）发生的原因通常都是因为JVM的垃圾回
 -XX:GCLogFileSize=5M
 </code></pre>
 * 初始优化建议
-+ 根据数据对象大小，放宽年轻代（Young Generation）的对象大小限制
-<pre><code>-XX:PretenureSizeThreshold</code></pre>
-+ 增加年轻代存活区数据进入老年代（Old Generation）之前的交替次数
-<pre><code>-XX:MaxTenuringThreshold</code></pre>
-+ 选择性调整触发老年代Full GC的内存使用率
+  * 根据数据对象大小，放宽年轻代（Young Generation）的对象大小限制。优点是大数据对象可以在使用后快速回收，风险是会加大年轻代的内存占用率
+<pre><code>-XX:PretenureSizeThreshold=300M</code></pre>
+  * 增加年轻代存活区数据进入老年代（Old Generation）之前的交替次数。优缺点同上。
+<pre><code>-XX:MaxTenuringThreshold=20</code></pre>
+  * 选择性调整触发老年代Full GC的内存使用率。优点是加快老年代的回收频次，缺点是应用会变慢。
 <pre><code>-XX:CMSInitiatingOccupancyFraction=50</code></pre>
 * 根据GC日志给出的后续优化建议
 

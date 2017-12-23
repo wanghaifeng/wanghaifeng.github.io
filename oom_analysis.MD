@@ -46,3 +46,6 @@ https://www.yourkit.com/docs/java/help/profiling_j2ee_remote.jsp
 
 ### 优化JVM内存配置或者代码优化建议
 TODO
+
+### 终极方案
+添加 -XX:-UseGCOverheadLimit 参数，忽略OutOfMemoryError。

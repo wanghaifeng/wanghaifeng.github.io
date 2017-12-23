@@ -30,8 +30,13 @@ OutOfMemory异常（简称OOM）发生的原因通常都是因为JVM的垃圾回
 <pre><code>-XX:CMSInitiatingOccupancyFraction=50</code></pre>
 #### 根据GC日志给出的后续优化建议
 
+TODO
 
 ### 对系统加压找出内存溢出原因
+压力测试及性能分析工具很多，这里以Jmeter（Free） + Yourkit（注册后免费试用）为例
+* 应用服务器植入Yourkit代理
+https://www.yourkit.com/docs/java/help/profiling_j2ee_remote.jsp
+
 #### 单用户单线程运行，记录每个URL的响应时间
 #### 10用户加压，记录并对比每个URL的相应时间，选择可能有问题的URL
 #### 50用户加压，记录对比主要URL相应时间
